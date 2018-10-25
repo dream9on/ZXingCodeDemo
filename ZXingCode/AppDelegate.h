@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <ZXingObjC/ZXingObjC.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate,ZXCaptureDelegate>
 
 
 @end

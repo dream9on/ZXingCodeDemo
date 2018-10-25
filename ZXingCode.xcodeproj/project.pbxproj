@@ -11,7 +11,30 @@
 		DE10A63A2181B005006FAFED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE10A6392181B005006FAFED /* Assets.xcassets */; };
 		DE10A63D2181B005006FAFED /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE10A63B2181B005006FAFED /* MainMenu.xib */; };
 		DE10A6402181B005006FAFED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DE10A63F2181B005006FAFED /* main.m */; };
+		DE10A6482181B131006FAFED /* ZXingObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A6472181B131006FAFED /* ZXingObjC.framework */; };
+		DE10A6492181B131006FAFED /* ZXingObjC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A6472181B131006FAFED /* ZXingObjC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DE10A64D2181B15C006FAFED /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A64C2181B15C006FAFED /* AVFoundation.framework */; };
+		DE10A64F2181B166006FAFED /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A64E2181B166006FAFED /* CoreGraphics.framework */; };
+		DE10A6512181B16F006FAFED /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A6502181B16F006FAFED /* CoreMedia.framework */; };
+		DE10A6532181B178006FAFED /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A6522181B178006FAFED /* CoreVideo.framework */; };
+		DE10A6552181B180006FAFED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A6542181B180006FAFED /* Foundation.framework */; };
+		DE10A6572181B18F006FAFED /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A6562181B18F006FAFED /* ImageIO.framework */; };
+		DE10A6592181B19A006FAFED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE10A6582181B19A006FAFED /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DE10A64A2181B131006FAFED /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DE10A6492181B131006FAFED /* ZXingObjC.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DE10A6332181B004006FAFED /* ZXingCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZXingCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +45,14 @@
 		DE10A63E2181B005006FAFED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE10A63F2181B005006FAFED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DE10A6412181B005006FAFED /* ZXingCode.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZXingCode.entitlements; sourceTree = "<group>"; };
+		DE10A6472181B131006FAFED /* ZXingObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZXingObjC.framework; path = ZXingCode/ZXingObjC.framework; sourceTree = "<group>"; };
+		DE10A64C2181B15C006FAFED /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DE10A64E2181B166006FAFED /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DE10A6502181B16F006FAFED /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		DE10A6522181B178006FAFED /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		DE10A6542181B180006FAFED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DE10A6562181B18F006FAFED /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		DE10A6582181B19A006FAFED /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +60,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE10A6592181B19A006FAFED /* QuartzCore.framework in Frameworks */,
+				DE10A6572181B18F006FAFED /* ImageIO.framework in Frameworks */,
+				DE10A6552181B180006FAFED /* Foundation.framework in Frameworks */,
+				DE10A6532181B178006FAFED /* CoreVideo.framework in Frameworks */,
+				DE10A6512181B16F006FAFED /* CoreMedia.framework in Frameworks */,
+				DE10A64F2181B166006FAFED /* CoreGraphics.framework in Frameworks */,
+				DE10A64D2181B15C006FAFED /* AVFoundation.framework in Frameworks */,
+				DE10A6482181B131006FAFED /* ZXingObjC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,8 +77,10 @@
 		DE10A62A2181B004006FAFED = {
 			isa = PBXGroup;
 			children = (
+				DE10A6472181B131006FAFED /* ZXingObjC.framework */,
 				DE10A6352181B004006FAFED /* ZXingCode */,
 				DE10A6342181B004006FAFED /* Products */,
+				DE10A64B2181B15C006FAFED /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +106,20 @@
 			path = ZXingCode;
 			sourceTree = "<group>";
 		};
+		DE10A64B2181B15C006FAFED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DE10A6582181B19A006FAFED /* QuartzCore.framework */,
+				DE10A6562181B18F006FAFED /* ImageIO.framework */,
+				DE10A6542181B180006FAFED /* Foundation.framework */,
+				DE10A6522181B178006FAFED /* CoreVideo.framework */,
+				DE10A6502181B16F006FAFED /* CoreMedia.framework */,
+				DE10A64E2181B166006FAFED /* CoreGraphics.framework */,
+				DE10A64C2181B15C006FAFED /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -75,6 +130,7 @@
 				DE10A62F2181B004006FAFED /* Sources */,
 				DE10A6302181B004006FAFED /* Frameworks */,
 				DE10A6312181B004006FAFED /* Resources */,
+				DE10A64A2181B131006FAFED /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,6 +152,11 @@
 				TargetAttributes = {
 					DE10A6322181B004006FAFED = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -268,9 +329,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ZXingCode/ZXingCode.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ZXingCode",
+				);
 				INFOPLIST_FILE = ZXingCode/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -285,9 +349,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ZXingCode/ZXingCode.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ZXingCode",
+				);
 				INFOPLIST_FILE = ZXingCode/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
