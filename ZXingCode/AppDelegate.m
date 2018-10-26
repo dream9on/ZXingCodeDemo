@@ -15,6 +15,12 @@
 - (IBAction)Btn_CreateBarcode:(NSButton *)sender;
 @property ZXCapture *capture;
 @property (weak) IBOutlet NSWindow *window;
+
+
+@property (nonatomic, assign) CGRect cropRect;      // 设置扫描识别区域
+@property (nonatomic, assign) CGSize scaleSize;     // 设置扫描识别区域所在的区域大小
+
+
 @end
 
 @implementation AppDelegate
@@ -28,6 +34,11 @@
     // Insert code here to tear down your application
 }
 
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+    return NO;
+}
+
 -(void)setupCapture
 {
     self.capture = [[ZXCapture alloc]init];
@@ -38,6 +49,8 @@
     
     [self.window.contentView.layer addSublayer:self.capture.layer];
     self.capture.delegate = self;
+    //设置识别区域  --未实现
+    
 }
 
 #pragma mark - ZXCaptureDelegate
@@ -59,7 +72,99 @@
     }
 }
 
+
+-(void)captureCameraIsReady:(ZXCapture *)capture
+{
+    NSLog(@"captureCamereIsReady:[%@]",capture);
+}
+
+
+/*
+- (void)captureOutput:(AVCaptureOutput *)captureOutput
+didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
+       fromConnection:(AVCaptureConnection *)connection
+{
+    @autoreleasepool {
+        // camera ready
+        if (!cameraIsReady && self.delegate)
+        {
+            cameraIsReady = YES;
+            // 计算cropRect 对应到videoFrame 中的裁剪区域
+            CVImageBufferRef videoFrame = CMSampleBufferGetImageBuffer(sampleBuffer);
+            CGSize size = CVImageBufferGetDisplaySize(videoFrame);
+            CGFloat scaleX = size.height/self.scaleSize.width;
+            CGFloat scaleY = size.width/self.scaleSize.height;
+            // 缩放
+            CGAffineTransform scale = CGAffineTransformMakeScale(scaleX, scaleY);
+            CGRect scaleRect = CGRectApplyAffineTransform(self.cropRect, scale);
+            // 旋转
+            CGAffineTransform rotate = CGAffineTransformMakeRotation(-M_PI_2);
+            CGRect rotateRect = CGRectApplyAffineTransform(scaleRect, rotate);
+            // 上移
+            CGAffineTransform translation = CGAffineTransformMakeTranslation(0, size.height);
+            CGRect translateRect = CGRectApplyAffineTransform(rotateRect, translation);
+            cropRectForImage = translateRect;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate captureCameraIsReady:self];
+            });
+        }
+        // 有回调处理
+        if (self.delegate)
+        {
+            CVImageBufferRef videoFrame = CMSampleBufferGetImageBuffer(sampleBuffer);
+            CGImageRef videoFrameImage = [ZXCGImageLuminanceSource createImageFromBuffer:videoFrame                                                                                    left:cropRectForImage.origin.x                                                                                     top:cropRectForImage.origin.y                                                                                   width:cropRectForImage.size.width                                                                                  height:cropRectForImage.size.height];
+            // 必需旋转，否则条形码不能识别
+            CGImageRef rotatedImage = [self createRotatedImage:videoFrameImage degrees:90];
+            CGImageRelease(videoFrameImage);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([self.delegate respondsToSelector:@selector(capturerResult:scaleImage:)])
+                {
+                    [self.delegate capturerResult:self scaleImage:rotatedImage];
+                }
+            });
+            ZXCGImageLuminanceSource *source = [[ZXCGImageLuminanceSource alloc] initWithCGImage:rotatedImage];
+            CGImageRelease(rotatedImage);
+            ZXHybridBinarizer *binarizer = [[ZXHybridBinarizer alloc] initWithSource:source];
+            ZXBinaryBitmap* bitmap = [ZXBinaryBitmap binaryBitmapWithBinarizer:binarizer];
+            ZXMultiFormatReader* reader = [ZXMultiFormatReader reader];
+            ZXDecodeHints* hints = [ZXDecodeHints hints];
+            ZXResult *result = [reader decode:bitmap hints:hints error:nil];
+            if (result) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.delegate captureResult:self result:result];
+                });
+            }
+        }
+    }
+}
+*/
+
+
 #pragma mark - ZXing 生成&解析二维码
+
+-(NSImage*)createCodeWithString:(NSString *)string
+                         format:(ZXBarcodeFormat)format
+                           size:(NSSize)size
+{
+    ZXEncodeHints *hints = [ZXEncodeHints hints];
+    hints.encoding = NSUTF8StringEncoding;                                                   // 设置编码类型
+    hints.errorCorrectionLevel = [ZXQRCodeErrorCorrectionLevel errorCorrectionLevelH];       // 设置纠正级别，越高识别越快
+    ZXMultiFormatWriter *writer = [[ZXMultiFormatWriter alloc] init];
+    ZXBitMatrix *result = [writer encode:string
+                                  format:kBarcodeFormatQRCode
+                                   width:size.width
+                                  height:size.height
+                                   hints:hints
+                                   error:nil];
+    
+    ZXImage *image = [ZXImage imageWithMatrix:result];
+    NSSize imageSize = NSMakeSize(CGImageGetWidth(image.cgimage), CGImageGetHeight(image.cgimage));
+    return [[NSImage alloc] initWithCGImage:image.cgimage size:imageSize];
+}
+
+
+
+
 /**
  *  根据字符串生成二维码 UIImage 对象
  *  @param str 需要生成二维码的字符串
@@ -82,8 +187,8 @@
 -(NSImage *)createCodeWithString:(NSString *)str
                             size:(CGSize)size
                       codeFomart:(ZXBarcodeFormat)format
-                       codeColor:(uint32_t)codeColor    //#FF00CC00   OX8C8C00
-                 backgroundColor:(uint32_t)backgroundColor   //#FF580900
+                       codeColor:(uint32_t)codeColor         //#008C8C00     从高到低分别为BGRA A为透明度
+                 backgroundColor:(uint32_t)backgroundColor   //#0958FF00
 {
     ZXMultiFormatWriter *writer = [[ZXMultiFormatWriter alloc] init];
     ZXBitMatrix *result = [writer encode:str format:format width:size.width height:size.width error:nil];
@@ -223,8 +328,8 @@
     NSImage *img2= [self createCodeWithString:text
                                          size:CGSizeMake(300, 300)
                                    codeFomart:kBarcodeFormatQRCode
-                                    codeColor:0x00FFFFFF
-                              backgroundColor:0XFF5809FA];
+                                    codeColor:0x008C8CFF
+                              backgroundColor:0Xff00FF0F];
     
     self.imageView.image =img2;
 }
